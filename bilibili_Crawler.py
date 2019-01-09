@@ -4,6 +4,8 @@ import urllib.request as urllib2
 import re
 import xlwt
 from tqdm import tqdm
+from test_sql import Sql_insert
+import pymysql
 
 row=0
 #判空函数
@@ -14,7 +16,7 @@ def IsNone(S):
         return True
 
 #爬取充电人数和up主名字
-def crawbilibili(userid,sheet,book):
+def crawbilibili(userid,cursor,db):
     global row
     userid
     url_elec = 'https://elec.bilibili.com/api/query.rank.do?mid=' + str(userid)
@@ -43,13 +45,15 @@ def crawbilibili(userid,sheet,book):
        # print(items_elec[0])
         pattern_name = re.compile('<title>(.*?)的个人空间 - 哔哩哔哩', re.S)
         items_name = re.findall(pattern_name, content_name)
+        Sql_insert(cursor,db,userid,items_name[0],items_elec[0])
+
         #print(items_name[0])
-        sheet.write(row, 0, userid)
-        sheet.write(row, 1, items_name[0])
-        sheet.write(row, 2, items_elec[0])
+        #sheet.write(row, 0, userid)
+        #sheet.write(row, 1, items_name[0])
+        #sheet.write(row, 2, items_elec[0])
         row+=1
         if(row%1000==0):
-            book.save('test.xls')
+            #book.save('test.xls')
             print("save as ",row)
     except error.URLError as e:
         if hasattr(e,"code"):
@@ -59,8 +63,10 @@ def crawbilibili(userid,sheet,book):
 
 
 if __name__ == '__main__':
-    book = xlwt.Workbook()  # 新建一个excel
-    sheet = book.add_sheet('case1_sheet')  # 添加一个sheet页
+    db = pymysql.connect("118.25.176.50", "daydayup", "233333", "daydayup",charset="utf8")
+    cursor = db.cursor()
+    #book = xlwt.Workbook()  # 新建一个excel
+    #sheet = book.add_sheet('case1_sheet')  # 添加一个sheet页
     for i in tqdm(range(1,400)):
-        crawbilibili(i,sheet,book)
-    book.save('test.xls')
+        crawbilibili(i,cursor,db)
+    db.close()
