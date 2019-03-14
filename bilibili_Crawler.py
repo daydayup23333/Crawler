@@ -2,9 +2,9 @@
 from urllib import error
 import urllib.request as urllib2
 import re
-import xlwt
 from tqdm import tqdm
 from test_sql import Sql_insert
+from test_sql import *
 import pymysql
 
 row=0
@@ -63,6 +63,7 @@ def crawbilibili(userid,cursor,db):
 
 
 if __name__ == '__main__':
+
     db = pymysql.connect("118.25.176.50", "daydayup", "233333", "daydayup",charset="utf8")
     cursor = db.cursor()
     #book = xlwt.Workbook()  # 新建一个excel

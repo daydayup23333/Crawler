@@ -1,7 +1,6 @@
 
 
 
-
 def Sql_insert(cursor,db,a,b,c):
     try:
         # 执行sql语句
