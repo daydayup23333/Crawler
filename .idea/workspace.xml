@@ -11,7 +11,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/Crawler$leetcode.coverage" NAME="leetcode Coverage Results" MODIFIED="1552573015206" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Crawler$leetcode.coverage" NAME="leetcode Coverage Results" MODIFIED="1552627480188" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Crawler$bilibili_Crawler.coverage" NAME="bilibili_Crawler Coverage Results" MODIFIED="1548835785330" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="FileEditorManager">
@@ -167,12 +167,12 @@
       <workItem from="1548832148043" duration="3600000" />
       <workItem from="1552563803934" duration="1375000" />
       <workItem from="1552566215375" duration="1262000" />
-      <workItem from="1552568090779" duration="2539000" />
+      <workItem from="1552568090779" duration="2660000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="8776000" />
+    <option name="totallyTimeSpent" value="8897000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
