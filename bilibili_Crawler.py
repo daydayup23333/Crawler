@@ -16,9 +16,12 @@ def IsNone(S):
         return True
 
 #爬取充电人数和up主名字
-def crawbilibili(userid,cursor,db):
+def crawbilibili(*numbers):
     global row
-    userid
+    print('numbers',numbers[0][0])
+    userid=numbers[0][0]
+    cursor=numbers[0][1]
+    db=numbers[0][2]
     url_elec = 'https://elec.bilibili.com/api/query.rank.do?mid=' + str(userid)
     url_name= 'https://space.bilibili.com/' + str(userid)
     headers = {

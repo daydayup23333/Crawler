@@ -1,4 +1,5 @@
 import pymysql
+from tqdm import tqdm
 from Thread.thread import  *
 from bilibili_Crawler import crawbilibili
 
@@ -7,8 +8,10 @@ def main():
     cursor = db.cursor()
     #book = xlwt.Workbook()  # 新建一个excel
     #sheet = book.add_sheet('case1_sheet')  # 添加一个sheet页
-    for i in tqdm(range(1,400)):
-        crawbilibili(i,cursor,db)
+    for i in tqdm(range(1,100)):
+        thread1=myThread(i,"Thread-"+str(i),i,crawbilibili,i,cursor,db)
+        #crawbilibili(i,cursor,db)
+        thread1.start()
     db.close()
 
 if __name__=='__main__':
