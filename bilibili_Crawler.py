@@ -1,11 +1,12 @@
+import sys
+import urllib.request as urllib2
+import pymysql
+import re
 
 from urllib import error
-import urllib.request as urllib2
-import re
 from tqdm import tqdm
-from test_sql import Sql_insert
-from test_sql import *
-import pymysql
+from sql import Sql_insert
+from log import log_run
 
 row=0
 #判空函数
@@ -18,10 +19,8 @@ def IsNone(S):
 #爬取充电人数和up主名字
 def crawbilibili(*numbers):
     global row
-    print('numbers',numbers[0][0])
+    #print('numbers',numbers[0][0])
     userid=numbers[0][0]
-    cursor=numbers[0][1]
-    db=numbers[0][2]
     url_elec = 'https://elec.bilibili.com/api/query.rank.do?mid=' + str(userid)
     url_name= 'https://space.bilibili.com/' + str(userid)
     headers = {
@@ -48,21 +47,20 @@ def crawbilibili(*numbers):
        # print(items_elec[0])
         pattern_name = re.compile('<title>(.*?)的个人空间 - 哔哩哔哩', re.S)
         items_name = re.findall(pattern_name, content_name)
-        Sql_insert(cursor,db,userid,items_name[0],items_elec[0])
+        Sql_insert(userid,items_name[0],int(items_elec[0]))
+        log_run('F:\daydayup\Crawler\\test_log.txt',"run seccuss Crawlerbilibili",sys._getframe().f_code.co_name)
 
         #print(items_name[0])
         #sheet.write(row, 0, userid)
         #sheet.write(row, 1, items_name[0])
         #sheet.write(row, 2, items_elec[0])
-        row+=1
-        if(row%1000==0):
-            #book.save('test.xls')
-            print("save as ",row)
     except error.URLError as e:
         if hasattr(e,"code"):
-            print(e.code)
+            pass
+            #print(e.code)
         if hasattr(e,"reason"):
-            print(e.reason)
+            pass
+            #print(e.reason)
 
 
 if __name__ == '__main__':

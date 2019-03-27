@@ -12,16 +12,16 @@ class myThread (threading.Thread):
         self.Func=Func
         self.args=numbers
     def run(self):
-        print ("开始线程：" + self.name)
+        #print ("开始线程：" + self.name)
         self.Func(self.args)
         #print_time(self.name, self.counter, 5)
-        print ("退出线程：" + self.name)
+        #print ("退出线程：" + self.name)
 
 def test(*numbers):
     a=numbers[0][0]
     b=numbers[0][1]
     for i in range(a):
-        print("name:",threading.current_thread().name)
+        #print("name:",threading.current_thread().name)
         time.sleep(b)
 
 if __name__=='__main__':
