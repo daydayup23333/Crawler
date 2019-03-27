@@ -20,9 +20,9 @@ class OPMysql(object):
         return __pool.connection()
 
     # 插入\更新\删除sql
-    def op_insert(self, sql,userid,username,elec):
+    def op_insert(self, sql,userid,username,elec,fans):
         #print('op_insert', sql,userid,username,elec)
-        insert_num = self.cur.execute(sql,[userid,username,elec])
+        insert_num = self.cur.execute(sql,[userid,username,elec,fans])
         #print('mysql sucess ', "userid:",userid, "username:",username,elec)
         self.coon.commit()
         return insert_num
@@ -41,12 +41,12 @@ class OPMysql(object):
         self.cur.close()
 
 
-def Sql_insert(userid,username,elec):
+def Sql_insert(userid,username,elec,fans):
     try:
         # 执行sql语句
-        sql ='insert into bilibili_elec(userid,username,elec) values (%s, %s, %s)'
+        sql ='insert into bilibili_elec(userid,username,elec) values (%s, %s, %s,%s)'
         opm = OPMysql()
-        res = opm.op_insert(sql,userid,username,elec)
+        res = opm.op_insert(sql,userid,username,elec,fans)
         opm.dispose()
     except:
         # 如果发生错误则回滚

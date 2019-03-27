@@ -21,8 +21,10 @@ def crawbilibili(*numbers):
     global row
     #print('numbers',numbers[0][0])
     userid=numbers[0][0]
+    #userid=2
     url_elec = 'https://elec.bilibili.com/api/query.rank.do?mid=' + str(userid)
     url_name= 'https://space.bilibili.com/' + str(userid)
+    url_fans='https://api.bilibili.com/x/relation/stat?vmid='+str(userid)
     headers = {
         'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36',
         'X-Requested-With': 'XMLHttpRequest',
@@ -36,20 +38,25 @@ def crawbilibili(*numbers):
     try:
         #request = urllib2.Request(url,headers = headers)
         request_elec = urllib2.Request(url_elec)
+        request_fans = urllib2.Request(url_fans)
         response_elec = urllib2.urlopen(request_elec)
+        response_fans = urllib2.urlopen(request_fans)
         response_name = urllib2.urlopen(url_name)
         content_elec = response_elec.read().decode('utf-8')
+        content_fans = response_fans.read().decode('utf-8')
         content_name = response_name.read().decode('UTF-8')
         pattern_elec = re.compile('"total_count":(.*?),"list"', re.S)
         items_elec = re.findall(pattern_elec,content_elec)
         if(IsNone(items_elec)):
             items_elec='0'
+            return 0
        # print(items_elec[0])
         pattern_name = re.compile('<title>(.*?)的个人空间 - 哔哩哔哩', re.S)
         items_name = re.findall(pattern_name, content_name)
-        Sql_insert(userid,items_name[0],int(items_elec[0]))
+        pattern_fans = re.compile('"follower":(.*?)}}',re.S)
+        fans_nums = re.findall(pattern_fans, content_fans)
+        Sql_insert(userid,items_name[0],int(items_elec[0]),int(fans_nums[0]))
         log_run('F:\daydayup\Crawler\\test_log.txt',"run seccuss Crawlerbilibili",sys._getframe().f_code.co_name)
-
         #print(items_name[0])
         #sheet.write(row, 0, userid)
         #sheet.write(row, 1, items_name[0])
@@ -62,13 +69,9 @@ def crawbilibili(*numbers):
             pass
             #print(e.reason)
 
-
 if __name__ == '__main__':
 
-    db = pymysql.connect("118.25.176.50", "daydayup", "233333", "daydayup",charset="utf8")
-    cursor = db.cursor()
     #book = xlwt.Workbook()  # 新建一个excel
     #sheet = book.add_sheet('case1_sheet')  # 添加一个sheet页
-    for i in tqdm(range(1,400)):
-        crawbilibili(i,cursor,db)
-    db.close()
+    i=1
+    crawbilibili(i)
