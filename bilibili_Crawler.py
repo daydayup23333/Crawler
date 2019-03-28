@@ -21,7 +21,6 @@ def crawbilibili(*numbers):
     global row
     #print('numbers',numbers[0][0])
     userid=numbers[0][0]
-    #userid=2
     url_elec = 'https://elec.bilibili.com/api/query.rank.do?mid=' + str(userid)
     url_name= 'https://space.bilibili.com/' + str(userid)
     url_fans='https://api.bilibili.com/x/relation/stat?vmid='+str(userid)
@@ -36,7 +35,6 @@ def crawbilibili(*numbers):
         'Accept': 'application/json, text/javascript, */*; q=0.01',
     }
     try:
-        #request = urllib2.Request(url,headers = headers)
         request_elec = urllib2.Request(url_elec)
         request_fans = urllib2.Request(url_fans)
         response_elec = urllib2.urlopen(request_elec)
@@ -57,21 +55,15 @@ def crawbilibili(*numbers):
         fans_nums = re.findall(pattern_fans, content_fans)
         Sql_insert(userid,items_name[0],int(items_elec[0]),int(fans_nums[0]))
         log_run('F:\daydayup\Crawler\\test_log.txt',"run seccuss Crawlerbilibili",sys._getframe().f_code.co_name)
-        #print(items_name[0])
-        #sheet.write(row, 0, userid)
-        #sheet.write(row, 1, items_name[0])
-        #sheet.write(row, 2, items_elec[0])
+        print(items_name[0])
+
     except error.URLError as e:
         if hasattr(e,"code"):
-            pass
-            #print(e.code)
+            print(e.code)
         if hasattr(e,"reason"):
-            pass
-            #print(e.reason)
+            print(e.reason)
 
 if __name__ == '__main__':
 
-    #book = xlwt.Workbook()  # 新建一个excel
-    #sheet = book.add_sheet('case1_sheet')  # 添加一个sheet页
     i=1
     crawbilibili(i)
